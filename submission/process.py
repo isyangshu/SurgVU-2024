@@ -175,7 +175,7 @@ class SurgVU_classify(ClassificationAlgorithm):
                 break
 
             if i == 0:
-                frames = [frame] * (61)
+                frames = [frame] * (23*4+1)
             else:
                 frames.append(frame)
                 del(frames[0])
