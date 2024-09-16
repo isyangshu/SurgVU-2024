@@ -24,7 +24,7 @@ import volume_transforms as volume_transforms
 # Toggle the variable below to debug locally. The final container would need to have execute_in_docker=True
 # Fix fillna
 ####
-execute_in_docker = False
+execute_in_docker = True
 
 class VideoLoader():
     def load(self, *, fname):
@@ -116,7 +116,7 @@ class SurgVU_classify(ClassificationAlgorithm):
     def dummy_step_prediction_model(self, frames):
         with torch.no_grad():
             self.step_classifier.eval()
-            buffer = frames[::4]
+            buffer = frames[::8]
             buffer = self.data_resize(buffer)
             buffer = np.stack(buffer, 0)
             buffer = self.data_transform(buffer).unsqueeze(0).to(self.device)
@@ -175,7 +175,7 @@ class SurgVU_classify(ClassificationAlgorithm):
                 break
 
             if i == 0:
-                frames = [frame] * (23*4+1)
+                frames = [frame] * (121)
             else:
                 frames.append(frame)
                 del(frames[0])
